@@ -6,13 +6,15 @@
 #include "Templates/SubclassOf.h"
 #include "GameFramework/PlayerController.h"
 #include "InputActionValue.h"
+#include "AlchemyAbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 #include "SpringJam24PlayerController.generated.h"
 
 /** Forward declaration to improve compiling times */
 class UNiagaraSystem;
 
 UCLASS()
-class ASpringJam24PlayerController : public APlayerController
+class ASpringJam24PlayerController : public APlayerController, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -38,6 +40,14 @@ public:
 	/** Jump Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* SetDestinationTouchAction;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAbilitySystemComponent* PlayerAbilitySystem;
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override
+	{
+		return PlayerAbilitySystem;
+	}
 
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */

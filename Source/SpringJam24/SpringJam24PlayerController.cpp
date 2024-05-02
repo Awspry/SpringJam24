@@ -16,6 +16,8 @@ ASpringJam24PlayerController::ASpringJam24PlayerController()
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
+
+	PlayerAbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>("PlayerAbilitySystem");
 }
 
 void ASpringJam24PlayerController::BeginPlay()
@@ -28,6 +30,8 @@ void ASpringJam24PlayerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
+
+	PlayerAbilitySystem->InitAbilityActorInfo(this, this);
 }
 
 void ASpringJam24PlayerController::SetupInputComponent()
